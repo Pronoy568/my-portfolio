@@ -5,7 +5,7 @@ import Image from "next/image";
 const NotFoundPage = () => {
   return (
     <>
-      <div className="container pt-20">
+      <div className="container py-12">
         <div>
           <div className="text-center mt-20">
             <div className="flex justify-center items-center">
