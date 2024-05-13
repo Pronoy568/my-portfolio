@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 import BlogCard from "./BlogCard";
 
 export interface MyBlogs {
@@ -34,6 +34,11 @@ const Blog = async () => {
             {data?.slice(0, 3)?.map((blog: MyBlogs) => (
               <BlogCard item={blog} key={blog._id} />
             ))}
+          </div>
+          <div className="text-center mt-4">
+            <Link href="/blogs">
+              <button className="btn text-white">More</button>
+            </Link>
           </div>
         </div>
       </div>

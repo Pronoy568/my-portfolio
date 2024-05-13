@@ -1,36 +1,51 @@
 "use client";
+import React, { useState, useRef, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateBlogsMutation } from "@/redux/features/blogsApi";
+import dynamic from "next/dynamic";
+
+const JoditEditor = dynamic(() => import("jodit-react"), {
+  ssr: false,
+});
 
 interface Inputs {
   title: string;
   image: string;
   description: string;
+  content?: string;
   link: string;
 }
 
 const AddBlog = () => {
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>(); // Correct import and usage of useForm
+  } = useForm<Inputs>();
 
   const [createBlog, { isLoading, error }] = useCreateBlogsMutation();
 
-  if (isLoading) {
-    return <div className="text-gray-100 text-3xl">Loading...</div>;
-  }
+  const config = useMemo(
+    () => ({
+      readonly: false,
+      placeholder: "Typing here...",
+    }),
+    []
+  );
 
-  if (error) {
-    return <div className="text-gray-100 text-3xl">Error...........</div>;
-  }
+  const handleEditorBlur = (newContent: string) => {
+    setContent(newContent);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const res = await createBlog(data);
+      const { content, ...blogData } = data;
+      const res = await createBlog(blogData);
       if ("error" in res) {
         console.error("Error during Register:", res.error);
       } else {
@@ -45,6 +60,14 @@ const AddBlog = () => {
       console.error("Error during Product created:", error);
     }
   };
+
+  if (isLoading) {
+    return <div className="text-gray-100 text-3xl">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-gray-100 text-3xl">Error...........</div>;
+  }
 
   return (
     <div className="w-full mx-auto flex justify-center items-center">
@@ -81,7 +104,7 @@ const AddBlog = () => {
             )}
           </div>
           <div className="flex flex-col mb-3">
-            <label className="mb-1">Descrition</label>
+            <label className="mb-1">Description</label>
             <input
               {...register("description", { required: true })}
               type="text"
@@ -104,7 +127,16 @@ const AddBlog = () => {
             )}
           </div>
 
-          {/* Submit button */}
+          <div className="flex flex-col mb-3">
+            <label className="mb-1">Content</label>
+            <JoditEditor
+              ref={editor}
+              value={content}
+              config={config}
+              className="text-gray-900"
+              onBlur={handleEditorBlur}
+            />
+          </div>
           <button type="submit" className="btn text-white">
             Submit
           </button>

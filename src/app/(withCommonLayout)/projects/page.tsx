@@ -1,6 +1,5 @@
+import ProjectCard from "@/components/Home/Projects/ProjectCard";
 import React from "react";
-import ProjectCard from "./ProjectCard";
-import Link from "next/link";
 
 export interface MyProjects {
   _id: string;
@@ -39,21 +38,16 @@ const Projects = async () => {
   const data: MyProjects[] = await res.json();
   return (
     <>
-      <div id="projects" className="container pt-6 pb-16 text-[#ffffff]">
+      <div id="projects" className="container pt-40 pb-14 text-[#ffffff]">
         <div className="text-4xl font-semibold justify-center item-center flex space-x-2">
           <span>MY</span>
           <span className="text-[#5ee4ae]">PROJECTS</span>
         </div>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 pt-10">
-          {data?.slice(0, 6)?.map((project: MyProjects) => (
+          {data?.map((project: MyProjects) => (
             <ProjectCard item={project} key={project._id} />
           ))}
-        </div>
-        <div className="text-center mt-4">
-          <Link href="/projects">
-            <button className="btn text-white">More</button>
-          </Link>
         </div>
       </div>
     </>
