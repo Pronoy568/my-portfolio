@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Providers from "@/lib/Providers/Providers";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <Providers>
       <html lang="en">
-        <body className={`${inter.className} bg-[#000814]`}>{children}</body>
+        <body className={`${inter.className} bg-[#000814]`}>
+          {children}
+          <Toaster position="top-right" />
+        </body>
       </html>
-    </>
+    </Providers>
   );
 }

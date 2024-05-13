@@ -1,5 +1,5 @@
 import About from "@/components/Home/About/About";
-import Blogs from "@/components/Home/Blogs/Blogs";
+import Blog from "@/components/Home/Blogs/Blog";
 import Contact from "@/components/Home/Contact/Contact";
 import Education from "@/components/Home/Education/Education";
 import Home from "@/components/Home/Home/Home";
@@ -17,7 +17,7 @@ const HomePage = () => {
       <Skills />
       <Projects />
       <Services />
-      <Blogs />
+      <Blog />
       <Contact />
     </>
   );
