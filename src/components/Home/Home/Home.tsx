@@ -35,7 +35,10 @@ const Home = () => {
               further expand my horizons and undertake new challenges in the
               ever-evolving realm of web development.
             </p>
-            <a href="/PronoyDas_Resume.pdf" download="Pronoy_resume.pdf">
+            <a
+              href="/Pronoy_FrontendDeveloper.pdf"
+              download="Pronoy_FrontendDeveloper.pdf"
+            >
               <button className="btn text-white">Download Resume</button>
             </a>
           </div>
